@@ -1,0 +1,21 @@
+image: gitpod/workspace-python-3.11
+
+tasks:
+  - init: |
+      echo "Configurando alias 'python' para 'python3'..."
+      sudo update-alternatives --install /usr/bin/python python /usr/bin/python3.11 1
+      
+      echo "Instalando pacote python3-venv..."
+      sudo apt-get update && sudo apt-get install -y python3.11-venv
+      
+      echo "Criando ambiente virtual e instalando dependências..."
+      python3 -m venv .venv
+      source .venv/bin/activate && pip install -r requirements.txt
+      
+      echo "Setup do ambiente concluído!"
+    before: |
+      source .venv/bin/activate
+
+ports:
+  - port: 8080
+    onOpen: open-browser
